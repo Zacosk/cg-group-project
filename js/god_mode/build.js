@@ -62,8 +62,6 @@ function createSkyBox(radius, hlines, vlines, textureName) {
     return sphere;
 }
 
-
-
 function createOrbitLines(orbitRadius){
     var material = new THREE.LineBasicMaterial({
         color:0x999999,
@@ -88,7 +86,6 @@ function createOrbitLines(orbitRadius){
 
     return orbit
 }
-
 
 var pluto = createTexturedSphere(0.465,8.184,8.184,"Pluto planet", 'images/textures/moontexture.jpg');
 var plutoOrbit = createOrbitLines(3948);
@@ -268,7 +265,6 @@ function addSpotlight(object, xpos, ypos, zpos) {
 }
 
 function addShapes() {
-
     scene.add(pluto);
     scene.add(triton);
     scene.add(neptune);
@@ -299,5 +295,5 @@ function addShapes() {
     scene.add(sun);
     scene.add(skybox);
     scene.add(spotlightgroup);
-    scene.add (orbits);
+    scene.add(orbits);
 }

@@ -34,6 +34,7 @@ animate_neptune();
 animate_triton();
 animate_pluto();
 renderScene();
+updateTime();
 
 createLight();
 buildGui();

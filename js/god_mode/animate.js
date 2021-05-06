@@ -35,6 +35,8 @@ const speed = 0.005;
 const d = 100;
 var alpha = 0;
 var dalpha = Math.PI/10000;
+var time = 1;
+var planetrotationspeed = 1;
 
 function renderScene(){
     renderer.render(scene, camera);
@@ -43,16 +45,20 @@ function renderScene(){
     //renderer.render(sceneHUD, cameraHUD);
 }
 
+function updateTime() {
+    dalpha = Math.PI/(10000/time);
+    alpha += dalpha;
+    requestAnimationFrame(updateTime);
+}
+
 function animate_sun(){
-    sun.rotation.y += speed/2;
+    sun.rotation.y += (speed/2)*time;
     sun.position.y = 1;
     requestAnimationFrame(animate_sun);
 }
 
 function animate_mercury(){
-    alpha += dalpha;
-
-    mercury.rotation.y += speed/58.6;
+    mercury.rotation.y += (speed/58.6)*time;
     mercury.position.y = 1;
     mercury.position.x = (-d*0.38)*Math.cos(alpha/0.24);
     mercury.position.z = (d*0.38)*Math.sin(alpha/0.24);
@@ -60,7 +66,7 @@ function animate_mercury(){
 }
 
 function animate_venus(){
-    venus.rotation += speed/243;
+    venus.rotation += (speed/243)*time;
     venus.position.y = 1;
     venus.position.x = (-d*0.72)*Math.cos(alpha/0.616);
     venus.position.z = (d*0.72)*Math.sin(alpha/0.616);
@@ -68,7 +74,7 @@ function animate_venus(){
 }
 
 function animate_earth(){
-    earth.rotation.y += speed;
+    earth.rotation.y += speed*time;
     earth.position.y = 1;
     earth.position.x = -d*Math.cos(alpha);
     earth.position.z = d*Math.sin(alpha);
@@ -76,7 +82,7 @@ function animate_earth(){
 }
 
 function animate_moon(){
-    moon.rotation.y += speed;
+    moon.rotation.y += speed*time;
     moon.position.y = earth.position.y;
     moon.position.x = earth.position.x+5*Math.sin(alpha*20);
     moon.position.z = earth.position.z-5*Math.cos(alpha*20);
@@ -86,7 +92,7 @@ function animate_moon(){
 }
 
 function animate_mars() {
-    mars.rotation.y += speed*1.03;
+    mars.rotation.y += (speed*1.03)*time;
     mars.position.y = 1;
     mars.position.x = (-d*1.524)*Math.cos(alpha/1.9);
     mars.position.z= (d*1.524)*Math.sin(alpha/1.9);
@@ -112,7 +118,7 @@ function animate_deimos(){
 }
 
 function animate_jupiter(){
-    jupiter.rotation.y += speed*0.41;
+    jupiter.rotation.y += (speed*0.41)*time;
     jupiter.position.y = 1;
     jupiter.position.x = (d*5.203)*Math.sin(alpha/11.862);
     jupiter.position.z = (d*5.203)*Math.cos(alpha/11.862);
@@ -156,30 +162,30 @@ function animate_callisto() {
 }
 
 function rotate(object) {
-    object.rotation.x += Math.random()/50;
-    object.rotation.z += Math.random()/50;
-    object.rotation.y += Math.random()/50;
+    object.rotation.x += (Math.random()/50)*time;
+    object.rotation.z += (Math.random()/50)*time;
+    object.rotation.y += (Math.random()/50)*time;
 }
 
 function animate_Asteroids() {
     //Rotate all cubes
     cubes.forEach(rotate);
     //Rotate the group around the Y axis
-    asteroids.rotation.y += 0.0008;
+    asteroids.rotation.y += 0.0008*(time/2);
     requestAnimationFrame(animate_Asteroids);
 }
 
 function animate_saturn() {
-    saturn.rotation.y += speed*0.425;
+    saturn.rotation.y += (speed*0.425)*time;
     saturn.position.y = 1;
     saturn.position.x = (d*9.5)*Math.sin(alpha/29.456);
-    saturn.position.z = (d*9.5)*Math.cos(alpha/26.456);
+    saturn.position.z = (d*9.5)*Math.cos(alpha/29.456); //26.456
     requestAnimationFrame(animate_saturn);
 }
 
 function animate_saturnring() {
     rings.rotation.z = 0.47;
-    rings.rotation.y += speed*0.425;
+    rings.rotation.y += (speed*0.425)*time;
     rings.position.y = saturn.position.y;
     rings.position.x = saturn.position.x;
     rings.position.z = saturn.position.z;
@@ -224,7 +230,7 @@ function animate_dione() {
 }
 
 function animate_uranus() {
-    uranus.rotation.y -= speed*0.718;
+    uranus.rotation.y -= (speed*0.718)*time;
     uranus.position.y = 1;
     uranus.position.x = (d*19.2)*Math.sin(alpha/83.7);
     uranus.position.z = (d*19.2)*Math.cos(alpha/83.7);
@@ -268,7 +274,7 @@ function animate_ariel() {
 }
 
 function animate_neptune() {
-    neptune.rotation.y += speed*0.673;
+    neptune.rotation.y += (speed*0.673)*time;
     neptune.position.y = 1;
     neptune.position.x = (d*30.05)*Math.sin(alpha/163.7);
     neptune.position.z = (d*30.05)*Math.cos(alpha/163.7);
@@ -285,7 +291,7 @@ function animate_triton() {
 }
 
 function animate_pluto() {
-    pluto.rotation.y += speed*0.673;
+    pluto.rotation.y += (speed*0.673)*time;
     pluto.position.y = 1;
     pluto.position.x = (d*39.48)*Math.sin(alpha/247.9);
     pluto.position.z = (d*39.48)*Math.cos(alpha/247.9);
@@ -408,11 +414,9 @@ function resizePlanet() {
 
 // Build the GUI
 var size = 1;
-var time = 1;
 var camdistance = 1;
 var camheight = 1;
 var orbit = 1;
-var planetrotation = 1;
 function buildGui() {
     gui = new dat.GUI();
     var solarsystemfolder = gui.addFolder('Solar System Controls');
@@ -437,9 +441,8 @@ function buildGui() {
         Pluto: function() {selectedplanet = pluto; selectPlanet(); selectedplanetfolder.open();},
 
         //Selected planet functions
-        Planet_Size: size,
-        Planet_Orbit: orbit,
-        Planet_Rotation: planetrotation,
+        Size: size,
+        Orbit_Size: orbit,
 
         //Camera Functions
         Lock_Camera: cameralock,
@@ -448,7 +451,7 @@ function buildGui() {
         Reset_Camera: function() {resetCamera();}
     }
         // Solar system folder
-        solarsystemfolder.add(params, 'Time', 0, 2).onChange(function(val){
+        solarsystemfolder.add(params, 'Time', 0.005, 1000).onChange(function(val){
             time = val;
         });
 
@@ -482,14 +485,11 @@ function buildGui() {
         solarsystemfolder.open();
 
         // Selected Planet folder
-        selectedplanetfolder.add(params, 'Planet_Size', 0.1, 50).onChange(function(val){
+        selectedplanetfolder.add(params, 'Size', 0.1, 50).onChange(function(val){
             size = val;
             resizePlanet();
         });
-        selectedplanetfolder.add(params, 'Planet_Orbit', 1, 100).onChange(function(val){
+        selectedplanetfolder.add(params, 'Orbit_Size', -100, 100).onChange(function(val){
             orbit = val;
-        });
-        selectedplanetfolder.add(params, 'Planet_Rotation', -4, 4).onChange(function(val){
-            planetspeed = val;
         });
     }
