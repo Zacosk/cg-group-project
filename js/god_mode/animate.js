@@ -413,6 +413,8 @@ var camdistance = 1;
 var camheight = 1;
 var orbit = 1;
 var planetrotation = 1;
+var orbit_show = 1
+
 function buildGui() {
     gui = new dat.GUI();
     var solarsystemfolder = gui.addFolder('Solar System Controls');
@@ -422,6 +424,14 @@ function buildGui() {
     var params={
         //solar system functions
         Time: time,
+        Orbit_Show: function() {if(orbit_show == 1){
+            scene.remove(orbits);
+            orbit_show = 0;
+        }
+        else{ scene.add(orbits);
+            orbit_show = 1;
+        }
+    },
 
         //select planet functions
         Sun: function() {selectedplanet = sun; selectPlanet(); selectedplanetfolder.open();},
@@ -451,6 +461,7 @@ function buildGui() {
         solarsystemfolder.add(params, 'Time', 0, 2).onChange(function(val){
             time = val;
         });
+        solarsystemfolder.add(params, 'Orbit_Show').name("Orbit show");
 
         // planet selection folder
         planetfolder.add(params, 'Sun');
