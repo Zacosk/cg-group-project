@@ -87,7 +87,7 @@ function createOrbitLines(orbitRadius){
     return orbit
 }
 
-var pluto = createTexturedSphere(0.465,8.184,8.184,"Pluto planet", 'images/textures/moontexture.jpg');
+var pluto = createTexturedSphere(0.465,12,12,"Pluto planet", 'images/textures/plutotexture.jpg');
 var plutoOrbit = createOrbitLines(3948);
 var triton = createSphere(0.526,9.2,9.2,0x828f88);
 var tritonOrbit = createOrbitLines(15);
@@ -150,7 +150,7 @@ var sun = createTexturedSphere(30,55,55,"Sun planet",'images/textures/suntexture
 var skybox = createSkyBox(100000, 55, 55, 'images/textures/milkywaytexture.jpeg');
 
 //asteroids
-var n = 300;
+var n = 800;
 var cubes = [];
 var asteroids = new THREE.Group();
 
@@ -176,9 +176,19 @@ function createAsteroids(){
         combined.multiply(rot);
         combined.multiply(tra);
         combined.multiply(rot2);
-        combined.multiply(sca);
+        //combined.multiply(sca);
         
-        cubes[i] = createSphere(1, 3, 3, 0x594433)
+        var rdmsize = (Math.random()*1.5)+0.5;
+        var rdmcolnum = Math.round(Math.random() * 3);
+        var colour = new THREE.Color(0xffffff);
+
+        switch(rdmcolnum) {
+            case 0: colour.setHex(0x594433); break;
+            case 1: colour.setHex(0x382c23); break;
+            case 2: colour.setHex(0x402e1f); break;
+            case 3: colour.setHex(0x4d3929); break;
+        }
+        cubes[i] = createSphere(rdmsize, 5, 6, colour)
         cubes[i].applyMatrix4(combined);
         asteroids.add(cubes[i]);
     }

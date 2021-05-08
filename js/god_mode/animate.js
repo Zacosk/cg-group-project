@@ -298,11 +298,6 @@ function animate_pluto() {
     requestAnimationFrame(animate_pluto);
 }
 
-
-
-
-
-
 //reposition camera
 var raycaster = new THREE.Raycaster();
 
@@ -454,6 +449,7 @@ function buildGui() {
         //Selected planet functions
         Size: size,
         Orbit_Size: orbit,
+        Reset_Planet: function() {},
 
         //Camera Functions
         Lock_Camera: cameralock,
@@ -465,14 +461,14 @@ function buildGui() {
         solarsystemfolder.add(params, 'Time', 0.005, 1000).onChange(function(val){
             time = val;
         });
-        solarsystemfolder.add(params, 'Orbit_Show').name("Orbit show");
+        solarsystemfolder.add(params, 'Orbit_Show').name("Toggle Orbit Rings");
 
         // planet selection folder
-        planetfolder.add(params, 'Sun');
+        planetfolder.add(params, 'Sun').name("The Sun");
         planetfolder.add(params, 'Mercury');
         planetfolder.add(params, 'Venus');
         planetfolder.add(params, 'Earth');
-        planetfolder.add(params, 'Moon');
+        planetfolder.add(params, 'Moon').name("The Moon");
         planetfolder.add(params, 'Mars');
         planetfolder.add(params, 'Jupiter');
         planetfolder.add(params, 'Saturn');
@@ -484,13 +480,13 @@ function buildGui() {
         camerafolder.add(params, 'Height',-50, 50).onChange(function(val){
             camheight = val;
         });
-        camerafolder.add(params, 'Distance', 1, 6).onChange(function(val){
+        camerafolder.add(params, 'Distance', 0.2, 6).onChange(function(val){
             camdistance = val;
         });
-        camerafolder.add(params, 'Lock_Camera').onChange(function(val){
+        camerafolder.add(params, 'Lock_Camera').name("Lock Camera").onChange(function(val){
             cameralock = val;
         });
-        camerafolder.add(params, 'Reset_Camera');
+        camerafolder.add(params, 'Reset_Camera').name("Reset Camera");
 
         planetfolder.open();
         camerafolder.open();
@@ -501,7 +497,8 @@ function buildGui() {
             size = val;
             resizePlanet();
         });
-        selectedplanetfolder.add(params, 'Orbit_Size', -100, 100).onChange(function(val){
+        selectedplanetfolder.add(params, 'Orbit_Size', -100, 100).name("Orbit Size").onChange(function(val){
             orbit = val;
         });
+        selectedplanetfolder.add(params, 'Reset_Planet').name("Reset Planet");
     }
