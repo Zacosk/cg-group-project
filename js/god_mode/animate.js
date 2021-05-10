@@ -60,24 +60,25 @@ function animate_sun(){
 function animate_mercury(){
     mercury.rotation.y += (speed/58.6)*time;
     mercury.position.y = 1;
-    mercury.position.x = (-d*0.38)*Math.cos(alpha/0.24);
-    mercury.position.z = (d*0.38)*Math.sin(alpha/0.24);
+    mercury.position.x = (-d*mercuryorbitradius)*Math.cos(alpha/0.24);
+    mercury.position.z = (d*mercuryorbitradius)*Math.sin(alpha/0.24);
+    //console.log(mercuryorbitscale);
     requestAnimationFrame(animate_mercury);
 }
 
 function animate_venus(){
     venus.rotation += (speed/243)*time;
     venus.position.y = 1;
-    venus.position.x = (-d*0.72)*Math.cos(alpha/0.616);
-    venus.position.z = (d*0.72)*Math.sin(alpha/0.616);
+    venus.position.x = (-d*venusorbitradius)*Math.cos(alpha/0.616);
+    venus.position.z = (d*venusorbitradius)*Math.sin(alpha/0.616);
     requestAnimationFrame(animate_venus);
 }
 
 function animate_earth(){
     earth.rotation.y += speed*time;
     earth.position.y = 1;
-    earth.position.x = -d*Math.cos(alpha);
-    earth.position.z = d*Math.sin(alpha);
+    earth.position.x = (-d*earthorbitradius)*Math.cos(alpha);
+    earth.position.z = (d*earthorbitradius)*Math.sin(alpha);
     requestAnimationFrame(animate_earth);
 }
 
@@ -94,8 +95,8 @@ function animate_moon(){
 function animate_mars() {
     mars.rotation.y += (speed*1.03)*time;
     mars.position.y = 1;
-    mars.position.x = (-d*1.524)*Math.cos(alpha/1.9);
-    mars.position.z= (d*1.524)*Math.sin(alpha/1.9);
+    mars.position.x = (-d*marsorbitradius)*Math.cos(alpha/1.9);
+    mars.position.z= (d*marsorbitradius)*Math.sin(alpha/1.9);
     requestAnimationFrame(animate_mars);
 }
 
@@ -120,8 +121,8 @@ function animate_deimos(){
 function animate_jupiter(){
     jupiter.rotation.y += (speed*0.41)*time;
     jupiter.position.y = 1;
-    jupiter.position.x = (d*5.203)*Math.sin(alpha/11.862);
-    jupiter.position.z = (d*5.203)*Math.cos(alpha/11.862);
+    jupiter.position.x = (d*jupiterorbitradius)*Math.sin(alpha/11.862);
+    jupiter.position.z = (d*jupiterorbitradius)*Math.cos(alpha/11.862);
     requestAnimationFrame(animate_jupiter);
 }
 
@@ -178,8 +179,8 @@ function animate_Asteroids() {
 function animate_saturn() {
     saturn.rotation.y += (speed*0.425)*time;
     saturn.position.y = 1;
-    saturn.position.x = (d*9.5)*Math.sin(alpha/29.456);
-    saturn.position.z = (d*9.5)*Math.cos(alpha/29.456); //26.456
+    saturn.position.x = (d*saturnorbitradius)*Math.sin(alpha/29.456);
+    saturn.position.z = (d*saturnorbitradius)*Math.cos(alpha/29.456); //26.456
     requestAnimationFrame(animate_saturn);
 }
 
@@ -232,8 +233,8 @@ function animate_dione() {
 function animate_uranus() {
     uranus.rotation.y -= (speed*0.718)*time;
     uranus.position.y = 1;
-    uranus.position.x = (d*19.2)*Math.sin(alpha/83.7);
-    uranus.position.z = (d*19.2)*Math.cos(alpha/83.7);
+    uranus.position.x = (d*uranusorbitradius)*Math.sin(alpha/83.7);
+    uranus.position.z = (d*uranusorbitradius)*Math.cos(alpha/83.7);
     requestAnimationFrame(animate_uranus);
 }
 
@@ -276,8 +277,8 @@ function animate_ariel() {
 function animate_neptune() {
     neptune.rotation.y += (speed*0.673)*time;
     neptune.position.y = 1;
-    neptune.position.x = (d*30.05)*Math.sin(alpha/163.7);
-    neptune.position.z = (d*30.05)*Math.cos(alpha/163.7);
+    neptune.position.x = (d*neptuneorbitradius)*Math.sin(alpha/163.7);
+    neptune.position.z = (d*neptuneorbitradius)*Math.cos(alpha/163.7);
     requestAnimationFrame(animate_neptune);
 }
 
@@ -293,8 +294,8 @@ function animate_triton() {
 function animate_pluto() {
     pluto.rotation.y += (speed*0.673)*time;
     pluto.position.y = 1;
-    pluto.position.x = (d*39.48)*Math.sin(alpha/247.9);
-    pluto.position.z = (d*39.48)*Math.cos(alpha/247.9);
+    pluto.position.x = (d*plutoorbitradius)*Math.sin(alpha/247.9);
+    pluto.position.z = (d*plutoorbitradius)*Math.cos(alpha/247.9);
     requestAnimationFrame(animate_pluto);
 }
 
@@ -332,8 +333,9 @@ function onDocumentMouseDown(event) {
 }
 
 var cameralock = true;
+var trackplanet = false;
 function followPlanet() {
-    if (planetselected) {
+    if (trackplanet) {
         var pos = selectedplanet.position;
         if (cameralock) {
             camera.position.set(pos.x+(dist*camdistance), pos.y+((dist/10)*camheight), pos.z);
@@ -346,7 +348,9 @@ function followPlanet() {
 
 // lock the camera to a planet and select it
 function selectPlanet() {
-    planetselected = true; 
+    planetselected = true;
+    trackplanet = true;
+    selectedplanetshortname = selectedplanet.name.replace(' planet', '');
     dist = calculateCameraDistance(selectedplanet.name);
     var pos = selectedplanet.position;
     camera.position.set(pos.x+dist, pos.y+(dist/10), pos.z);
@@ -385,10 +389,11 @@ function onDocumentKeyDown(event) {
 
 function resetCamera() {
     controls.reset();
-    planetselected= false;
-    selectedplanetname = "";
+    //planetselected= false;
+    //selectedplanetname = "";
     camheight = 1;
     camdistance = 1;
+    trackplanet = false;
 }
 
 function resizePlanet() {
@@ -407,6 +412,23 @@ function resizePlanet() {
     requestAnimationFrame(resizePlanet);
 }
 
+function resetOrbit() {
+    if (planetselected) {
+        //console.log("planetselected");
+        switch (selectedplanetshortname) {
+        case "Mercury": mercuryorbitradius = 0.38; break;
+        case "Venus": venusorbitradius = 0.72; break;
+        case "Earth": earthorbitradius = 1; break;
+        case "Mars": marsorbitradius = 1.524; break;
+        case "Jupiter": jupiterorbitradius = 5.203; break;
+        case "Saturn": saturnorbitradius = 9.5; break;
+        case "Uranus": uranusorbitradius = 19.2; break;
+        case "Neptune": neptuneorbitradius = 30.05; break;
+        case "Pluto": plutoorbitradius = 39.48; break;
+        }
+    }
+}
+
 // Build the GUI
 var size = 1;
 var camdistance = 1;
@@ -414,6 +436,7 @@ var camheight = 1;
 var orbit = 1;
 var planetrotation = 1;
 var orbit_show = 1
+var selectedplanetshortname = "";
 
 function buildGui() {
     gui = new dat.GUI();
@@ -448,8 +471,8 @@ function buildGui() {
 
         //Selected planet functions
         Size: size,
-        Orbit_Size: orbit,
-        Reset_Planet: function() {},
+        Orbit_Radius: orbit,
+        Reset_Orbit: function() {resetOrbit();},
 
         //Camera Functions
         Lock_Camera: cameralock,
@@ -497,8 +520,22 @@ function buildGui() {
             size = val;
             resizePlanet();
         });
-        selectedplanetfolder.add(params, 'Orbit_Size', -100, 100).name("Orbit Size").onChange(function(val){
-            orbit = val;
+        selectedplanetfolder.add(params, 'Orbit_Radius', 0, 50).name("Orbit Radius").onChange(function(val){
+            //orbit = val;
+            if (planetselected) {
+                //console.log("planetselected");
+                switch (selectedplanetshortname) {
+                case "Mercury": mercuryorbitradius = val; break;
+                case "Venus": venusorbitradius = val; break;
+                case "Earth": earthorbitradius = val; break;
+                case "Mars": marsorbitradius = val; break;
+                case "Jupiter": jupiterorbitradius = val; break;
+                case "Saturn": saturnorbitradius = val; break;
+                case "Uranus": uranusorbitradius = val; break;
+                case "Neptune": neptuneorbitradius = val; break;
+                case "Pluto": plutoorbitradius = val; break;
+                }
+            }
         });
-        selectedplanetfolder.add(params, 'Reset_Planet').name("Reset Planet");
+        selectedplanetfolder.add(params, 'Reset_Orbit').name("Reset Orbit");
     }

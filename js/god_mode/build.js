@@ -6,6 +6,16 @@ var cameralight;
 var sunlight;
 var orbits = new THREE.Group();
 
+var mercuryorbitradius = 0.38;
+var venusorbitradius = 0.72;
+var earthorbitradius = 1;
+var marsorbitradius = 1.524;
+var jupiterorbitradius = 5.203;
+var saturnorbitradius = 9.5;
+var uranusorbitradius = 19.2;
+var neptuneorbitradius = 30.05;
+var plutoorbitradius = 39.48;
+
 //Create a cube using variable w, h, d
 function createCube(w, h, d, color) {
     var material = new THREE.MeshPhongMaterial();
@@ -88,11 +98,11 @@ function createOrbitLines(orbitRadius){
 }
 
 var pluto = createTexturedSphere(0.465,12,12,"Pluto planet", 'images/textures/plutotexture.jpg');
-var plutoOrbit = createOrbitLines(3948);
+var plutoOrbit = createOrbitLines(plutoorbitradius*100);
 var triton = createSphere(0.526,9.2,9.2,0x828f88);
 var tritonOrbit = createOrbitLines(15);
 var neptune = createTexturedSphere(9.7,170,170, "Neptune planet", 'images/textures/neptunetexture.jpg');
-var neptuneOrbit = createOrbitLines(3005);
+var neptuneOrbit = createOrbitLines(neptuneorbitradius*100);
 
 var ariel = createSphere(0.224,3.956,3.956,0x8e7c72);
 var arielOrbit = createOrbitLines(12);
@@ -103,7 +113,7 @@ var oberonOrbit = createOrbitLines(25);
 var titania = createSphere(0.306,5.39,5.39,0xd2c6b9);
 var titaniaOrbit = createOrbitLines(20);
 var uranus = createTexturedSphere(10,176,176,"Uranus planet", 'images/textures/uranustexture.jpg');
-var uranusOrbit = createOrbitLines(1920);
+var uranusOrbit = createOrbitLines(uranusorbitradius*100);
 
 var dione = createSphere(0.216,3.8,3.5,0x7d7d7d);
 var dioneOrbit = createOrbitLines(30.4);
@@ -114,7 +124,7 @@ var rheaOrbit = createOrbitLines(41);
 var titan = createSphere(1.07,17.464,17.464,0xd7c461);
 var titanOrbit = createOrbitLines(50);
 var saturn = createTexturedSphere(22.74,400,400,"Saturn planet", 'images/textures/saturntexture.jpg');
-var saturnOrbit = createOrbitLines(950)
+var saturnOrbit = createOrbitLines(saturnorbitradius*100)
 
 var callisto = createSphere(0.945,16.6,16.6,0x7c6d60);
 var callistoOrbit = createOrbitLines(70);
@@ -125,25 +135,25 @@ var europaOrbit = createOrbitLines(40);
 var io = createSphere(0.7,12.57,12.57,0xcabf55);
 var ioOrbit = createOrbitLines(30);
 var jupiter = createTexturedSphere(27.2,482,482,"Jupiter planet", 'images/textures/jupitertexture.jpg');
-var jupiterOrbit = createOrbitLines(520.3);
+var jupiterOrbit = createOrbitLines(jupiterorbitradius*100);
 
 var deimos = createSphere(0.002,0.035,0.035,0x2596be);
 var deimosOrbit = createOrbitLines(5);
 var phobos = createSphere(0.004,0.07,0.07,0x2596be);
 var phobosOrbit = createOrbitLines(3);
 var mars = createTexturedSphere(1.33,23.43,23.43,"Mars planet",'images/textures/marstexture.jpg');
-var marsOrbit = createOrbitLines(152.4);
+var marsOrbit = createOrbitLines(marsorbitradius*100);
 
 var earth = createTexturedSphere(2.5,44,44,"Earth planet",'images/textures/earthtexture.jpg');
-var earthOrbit = createOrbitLines(100);
+var earthOrbit = createOrbitLines(earthorbitradius*100);
 var moon = createTexturedSphere(0.675,11.88,11.88,"Moon planet",'images/textures/moontexture.jpg');
 var moonOrbit = createOrbitLines(5);
 
 var venus = createTexturedSphere(2.5,44,44,"Venus planet",'images/textures/venustexture.jpg');
-var venusOrbit = createOrbitLines(72);
+var venusOrbit = createOrbitLines(venusorbitradius*100);
 
 var mercury = createTexturedSphere(1,32,32,"Mercury planet",'images/textures/mercurytexture.jpg');
-var mercuryOrbit = createOrbitLines(38);
+var mercuryOrbit = createOrbitLines(mercuryorbitradius*100);
 
 var sun = createTexturedSphere(30,55,55,"Sun planet",'images/textures/suntexture.jpg');
 
