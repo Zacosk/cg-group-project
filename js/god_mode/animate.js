@@ -385,6 +385,15 @@ function onDocumentKeyDown(event) {
     if (keyCode == 27) {
         resetCamera();
     }
+    if (keyCode == 90) {
+        //code to remove sun?
+    sun.geometry.dispose();
+    sun.material.dispose();
+    scene.remove(sun);
+    }
+    if (keyCode == 88) {
+        scene.add(sun);
+    }
 }
 
 function resetCamera() {
@@ -401,14 +410,21 @@ function resizePlanet() {
         selectedplanet.scale.x = size;
         selectedplanet.scale.y = size;
         selectedplanet.scale.z = size;
+        if (selectedplanet.name.includes("Saturn")) {
+            rings.scale.x = size;
+            rings.scale.y = size;
+            rings.scale.z = size;
+        }
+        if (selectedplanet.name.includes("Sun")) {
+            spotlightgroup.scale.x = size;
+            spotlightgroup.scale.y = size;
+            spotlightgroup.scale.z = size;
+            //add in code to increase spotlight distance
+            //for (var i = 0; i < spotlightgroup.size)
+            console.log("yes");
+        }
     }
-    if (selectedplanet.name.includes("Sun")) {
-        spotlightgroup.scale.x = size;
-        spotlightgroup.scale.y = size;
-        spotlightgroup.scale.z = size;
-        //add in code to increase spotlight distance
-        //for (var i = 0; i < spotlightgroup.size)
-    }
+
     requestAnimationFrame(resizePlanet);
 }
 
