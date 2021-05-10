@@ -160,7 +160,7 @@ var sun = createTexturedSphere(30,55,55,"Sun planet",'images/textures/suntexture
 var skybox = createSkyBox(100000, 55, 55, 'images/textures/milkywaytexture.jpeg');
 
 //asteroids
-var n = 800;
+var n = 600;
 var cubes = [];
 var asteroids = new THREE.Group();
 
@@ -169,8 +169,7 @@ var r = 40;
 var ring = [];
 var rings = new THREE.Group();
 
-function createAsteroids(){
-    
+function createAsteroids() {
     for(let i=0; i < n; i++) {
         var rot2 = new THREE.Matrix4();
         var sca = new THREE.Matrix4();
@@ -188,7 +187,7 @@ function createAsteroids(){
         combined.multiply(rot2);
         //combined.multiply(sca);
         
-        var rdmsize = (Math.random()*1.5)+0.5;
+        var rdmsize = (Math.random()*2)+0.5;
         var rdmcolnum = Math.round(Math.random() * 3);
         var colour = new THREE.Color(0xffffff);
 
@@ -205,7 +204,6 @@ function createAsteroids(){
 }
 
 function createsaturnring() {
-    
     for(let b=0; b < r; b++) {
         var rot2 = new THREE.Matrix4();
         var sca = new THREE.Matrix4();
