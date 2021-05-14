@@ -62,6 +62,11 @@ function animate_mercury(){
     mercury.position.y = 1;
     mercury.position.x = (-d*mercuryorbitradius)*Math.cos(alpha/0.24);
     mercury.position.z = (d*mercuryorbitradius)*Math.sin(alpha/0.24);
+
+    mercuryGhost.rotation.y += (speed/58.6)*time;
+    mercuryGhost.position.y = 1;
+    mercuryGhost.position.x = (-d*0.38)*Math.cos(alpha/0.24);
+    mercuryGhost.position.z = (d*0.38)*Math.sin(alpha/0.24);
     //console.log(mercuryorbitscale);
     requestAnimationFrame(animate_mercury);
 }
@@ -71,6 +76,11 @@ function animate_venus(){
     venus.position.y = 1;
     venus.position.x = (-d*venusorbitradius)*Math.cos(alpha/0.616);
     venus.position.z = (d*venusorbitradius)*Math.sin(alpha/0.616);
+
+    venusGhost.rotation += (speed/243)*time;
+    venusGhost.position.y = 1;
+    venusGhost.position.x = (-d*0.72)*Math.cos(alpha/0.616);
+    venusGhost.position.z = (d*0.72)*Math.sin(alpha/0.616);
     requestAnimationFrame(animate_venus);
 }
 
@@ -79,6 +89,11 @@ function animate_earth(){
     earth.position.y = 1;
     earth.position.x = (-d*earthorbitradius)*Math.cos(alpha);
     earth.position.z = (d*earthorbitradius)*Math.sin(alpha);
+
+    earthGhost.rotation.y += speed*time;
+    earthGhost.position.y = 1;
+    earthGhost.position.x = (-d*1)*Math.cos(alpha);
+    earthGhost.position.z = (d*1)*Math.sin(alpha);
     requestAnimationFrame(animate_earth);
 }
 
@@ -97,6 +112,11 @@ function animate_mars() {
     mars.position.y = 1;
     mars.position.x = (-d*marsorbitradius)*Math.cos(alpha/1.9);
     mars.position.z= (d*marsorbitradius)*Math.sin(alpha/1.9);
+
+    marsGhost.rotation.y += (speed*1.03)*time;
+    marsGhost.position.y = 1;
+    marsGhost.position.x = (-d*1.524)*Math.cos(alpha/1.9);
+    marsGhost.position.z= (d*1.524)*Math.sin(alpha/1.9);
     requestAnimationFrame(animate_mars);
 }
 
@@ -123,6 +143,11 @@ function animate_jupiter(){
     jupiter.position.y = 1;
     jupiter.position.x = (d*jupiterorbitradius)*Math.sin(alpha/11.862);
     jupiter.position.z = (d*jupiterorbitradius)*Math.cos(alpha/11.862);
+
+    jupiterGhost.rotation.y += (speed*0.41)*time;
+    jupiterGhost.position.y = 1;
+    jupiterGhost.position.x = (d*5.203)*Math.sin(alpha/11.862);
+    jupiterGhost.position.z = (d*5.203)*Math.cos(alpha/11.862);
     requestAnimationFrame(animate_jupiter);
 }
 
@@ -181,6 +206,11 @@ function animate_saturn() {
     saturn.position.y = 1;
     saturn.position.x = (d*saturnorbitradius)*Math.sin(alpha/29.456);
     saturn.position.z = (d*saturnorbitradius)*Math.cos(alpha/29.456); //26.456
+
+    saturnGhost.rotation.y += (speed*0.425)*time;
+    saturnGhost.position.y = 1;
+    saturnGhost.position.x = (d*9.5)*Math.sin(alpha/29.456);
+    saturnGhost.position.z = (d*9.5)*Math.cos(alpha/29.456);
     requestAnimationFrame(animate_saturn);
 }
 
@@ -235,6 +265,11 @@ function animate_uranus() {
     uranus.position.y = 1;
     uranus.position.x = (d*uranusorbitradius)*Math.sin(alpha/83.7);
     uranus.position.z = (d*uranusorbitradius)*Math.cos(alpha/83.7);
+
+    uranusGhost.rotation.y -= (speed*0.718)*time;
+    uranusGhost.position.y = 1;
+    uranusGhost.position.x = (d*19.2)*Math.sin(alpha/83.7);
+    uranusGhost.position.z = (d*19.2)*Math.cos(alpha/83.7);
     requestAnimationFrame(animate_uranus);
 }
 
@@ -279,6 +314,11 @@ function animate_neptune() {
     neptune.position.y = 1;
     neptune.position.x = (d*neptuneorbitradius)*Math.sin(alpha/163.7);
     neptune.position.z = (d*neptuneorbitradius)*Math.cos(alpha/163.7);
+
+    neptuneGhost.rotation.y += (speed*0.673)*time;
+    neptuneGhost.position.y = 1;
+    neptuneGhost.position.x = (d*30.05)*Math.sin(alpha/163.7);
+    neptuneGhost.position.z = (d*30.05)*Math.cos(alpha/163.7);
     requestAnimationFrame(animate_neptune);
 }
 
@@ -296,6 +336,11 @@ function animate_pluto() {
     pluto.position.y = 1;
     pluto.position.x = (d*plutoorbitradius)*Math.sin(alpha/247.9);
     pluto.position.z = (d*plutoorbitradius)*Math.cos(alpha/247.9);
+
+    plutoGhost.rotation.y += (speed*0.673)*time;
+    plutoGhost.position.y = 1;
+    plutoGhost.position.x = (d*39.48)*Math.sin(alpha/247.9);
+    plutoGhost.position.z = (d*39.48)*Math.cos(alpha/247.9);
     requestAnimationFrame(animate_pluto);
 }
 
@@ -432,15 +477,15 @@ function resetOrbit() {
     if (planetselected) {
         //console.log("planetselected");
         switch (selectedplanetshortname) {
-        case "Mercury": mercuryorbitradius = 0.38; break;
-        case "Venus": venusorbitradius = 0.72; break;
-        case "Earth": earthorbitradius = 1; break;
-        case "Mars": marsorbitradius = 1.524; break;
-        case "Jupiter": jupiterorbitradius = 5.203; break;
-        case "Saturn": saturnorbitradius = 9.5; break;
-        case "Uranus": uranusorbitradius = 19.2; break;
-        case "Neptune": neptuneorbitradius = 30.05; break;
-        case "Pluto": plutoorbitradius = 39.48; break;
+        case "Mercury": mercuryorbitradius = 0.38; scene.remove(mercuryGhost); break;
+        case "Venus": venusorbitradius = 0.72; scene.remove(venusGhost); break;
+        case "Earth": earthorbitradius = 1; scene.remove(earthGhost); break;
+        case "Mars": marsorbitradius = 1.524; scene.remove(marsGhost); break;
+        case "Jupiter": jupiterorbitradius = 5.203; scene.remove(jupiterGhost); break;
+        case "Saturn": saturnorbitradius = 9.5; scene.remove(saturnGhost); break;
+        case "Uranus": uranusorbitradius = 19.2; scene.remove(uranusGhost); break;
+        case "Neptune": neptuneorbitradius = 30.05; scene.remove(neptuneGhost); break;
+        case "Pluto": plutoorbitradius = 39.48; scene.remove(plutoGhost); break;
         }
     }
 }
@@ -541,15 +586,15 @@ function buildGui() {
             if (planetselected) {
                 //console.log("planetselected");
                 switch (selectedplanetshortname) {
-                case "Mercury": mercuryorbitradius = val; break;
-                case "Venus": venusorbitradius = val; break;
-                case "Earth": earthorbitradius = val; break;
-                case "Mars": marsorbitradius = val; break;
-                case "Jupiter": jupiterorbitradius = val; break;
-                case "Saturn": saturnorbitradius = val; break;
-                case "Uranus": uranusorbitradius = val; break;
-                case "Neptune": neptuneorbitradius = val; break;
-                case "Pluto": plutoorbitradius = val; break;
+                case "Mercury": mercuryorbitradius = val; scene.add(mercuryGhost); break;
+                case "Venus": venusorbitradius = val; scene.add(venusGhost); break;
+                case "Earth": earthorbitradius = val; scene.add(earthGhost); break;
+                case "Mars": marsorbitradius = val; scene.add(marsGhost); break;
+                case "Jupiter": jupiterorbitradius = val; scene.add(jupiterGhost); break;
+                case "Saturn": saturnorbitradius = val; scene.add(saturnGhost); break;
+                case "Uranus": uranusorbitradius = val; scene.add(uranusGhost); break;
+                case "Neptune": neptuneorbitradius = val; scene.add(neptuneGhost); break;
+                case "Pluto": plutoorbitradius = val; scene.add(plutoGhost); break;
                 }
             }
         });

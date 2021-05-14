@@ -23,9 +23,23 @@
   <!--  <div class="header">
         <h1>God Mode</h1>
     </div> -->
+    <!--Load in shaders:-->
+    <script type='x-shader/x-vertex' id='vertexShader'>
+        attribute float alpha; varying float vAlpha; void main() { vAlpha = alpha; vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 ); gl_PointSize = 2.0; gl_Position = projectionMatrix * mvPosition; }
+    </script>
+
+    <script type='x-shader/x-fragment' id='fragmentShader'>
+        uniform vec3 color; varying float vAlpha; void main() { gl_FragColor = vec4( color, vAlpha ); }
+    </script>
+
     <script src = "js/god_mode/setup.js"></script>
     <script src = "js/god_mode/build.js"></script>
     <script src = "js/god_mode/animate.js"></script>
     <script src = "js/god_mode/run.js"></script>
+
+    <!--
+    <script>
+        buildShader('vertexShader', 'fragmentShader');
+    </script> -->
 </body>
 </html>
