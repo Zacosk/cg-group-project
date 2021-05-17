@@ -17,7 +17,7 @@ var neptuneorbitradius = 30.05;
 var plutoorbitradius = 39.48;
 
 //Add 'ghost' planets with shader
-function buildShader(vertex, fragment, radius, hlines, vlines) {
+function createSphereShader(vertex, fragment, radius, hlines, vlines) {
     //Define the Shader geometry
     var geometry = new THREE.SphereBufferGeometry(radius, hlines, vlines);
     // Define the number of vertices in the Shader geometry
@@ -49,6 +49,40 @@ function buildShader(vertex, fragment, radius, hlines, vlines) {
     var ghostSphere = new THREE.Points(geometry, shaderMaterial);
 
     return ghostSphere;
+}
+
+function createCubeShader() {/*
+    //Define the Shader geometry
+    var geometry = new THREE.SphereBufferGeometry(radius, hlines, vlines);
+    // Define the number of vertices in the Shader geometry
+    var numVertices = geometry.attributes.position.count;
+    // Create a vertex array
+    var alphas = new Float32Array(numVertices*1);
+    // Radomly populate the vertex array
+    for (var i = 0; i < numVertices; i++) {
+        alphas[i] = Math.random();
+    }
+    // Assign the vertex array as attribute to the vertex geometry
+    geometry.addAttribute('alpha', new THREE.BufferAttribute(alphas, 1));
+    // Define the uniforms parameter to set the color value of the Shader
+    var color = new THREE.Color(0x999999);
+    //color.setHex(Math.random()* 0xffffff);
+    var uniforms = {
+        color: {
+            value: color
+        },
+    }
+    // Define the Shader material from (color,vertex,fragment) objects
+    var shaderMaterial = new THREE.ShaderMaterial({
+        uniforms: uniforms,
+        vertexShader: document.getElementById(vertex).textContent,
+        fragmentShader: document.getElementById(fragment).textContent,
+        transparent: true
+    });
+    // Create a cloud of point using the geometry and Shader material
+    var ghostCube = new THREE.Points(geometry, shaderMaterial);
+    
+    return ghostCube; */
 }
 
 //Create a cube using variable w, h, d
@@ -133,13 +167,13 @@ function createOrbitLines(orbitRadius){
 }
 
 var pluto = createTexturedSphere(0.465,12,12,"Pluto planet", 'images/textures/plutotexture.jpg');
-var plutoGhost = buildShader('vertexShader', 'fragmentShader', 0.2, 12, 12);
+var plutoGhost = createSphereShader('vertexShader', 'fragmentShader', 0.2, 12, 12);
 var plutoOrbit = createOrbitLines(plutoorbitradius*100);
 
 var triton = createSphere(0.526,9.2,9.2,0x828f88);
 var tritonOrbit = createOrbitLines(15);
 var neptune = createTexturedSphere(9.7,170,170, "Neptune planet", 'images/textures/neptunetexture.jpg');
-var neptuneGhost = buildShader('vertexShader', 'fragmentShader', 8.8, 44, 44);
+var neptuneGhost = createSphereShader('vertexShader', 'fragmentShader', 8.8, 44, 44);
 var neptuneOrbit = createOrbitLines(neptuneorbitradius*100);
 
 var ariel = createSphere(0.224,3.956,3.956,0x8e7c72);
@@ -151,7 +185,7 @@ var oberonOrbit = createOrbitLines(25);
 var titania = createSphere(0.306,5.39,5.39,0xd2c6b9);
 var titaniaOrbit = createOrbitLines(20);
 var uranus = createTexturedSphere(10,176,176,"Uranus planet", 'images/textures/uranustexture.jpg');
-var uranusGhost = buildShader('vertexShader', 'fragmentShader', 9, 44, 44);
+var uranusGhost = createSphereShader('vertexShader', 'fragmentShader', 9, 44, 44);
 var uranusOrbit = createOrbitLines(uranusorbitradius*100);
 
 var dione = createSphere(0.216,3.8,3.5,0x7d7d7d);
@@ -163,7 +197,7 @@ var rheaOrbit = createOrbitLines(41);
 var titan = createSphere(1.07,17.464,17.464,0xd7c461);
 var titanOrbit = createOrbitLines(50);
 var saturn = createTexturedSphere(22.74,400,400,"Saturn planet", 'images/textures/saturntexture.jpg');
-var saturnGhost = buildShader('vertexShader', 'fragmentShader', 21, 44, 44);
+var saturnGhost = createSphereShader('vertexShader', 'fragmentShader', 21, 44, 44);
 var saturnOrbit = createOrbitLines(saturnorbitradius*100)
 
 var callisto = createSphere(0.945,16.6,16.6,0x7c6d60);
@@ -175,7 +209,7 @@ var europaOrbit = createOrbitLines(40);
 var io = createSphere(0.7,12.57,12.57,0xcabf55);
 var ioOrbit = createOrbitLines(30);
 var jupiter = createTexturedSphere(27.2,482,482,"Jupiter planet", 'images/textures/jupitertexture.jpg');
-var jupiterGhost = buildShader('vertexShader', 'fragmentShader', 26, 44, 44);
+var jupiterGhost = createSphereShader('vertexShader', 'fragmentShader', 26, 44, 44);
 var jupiterOrbit = createOrbitLines(jupiterorbitradius*100);
 
 var deimos = createSphere(0.002,0.035,0.035,0x2596be);
@@ -183,21 +217,21 @@ var deimosOrbit = createOrbitLines(5);
 var phobos = createSphere(0.004,0.07,0.07,0x2596be);
 var phobosOrbit = createOrbitLines(3);
 var mars = createTexturedSphere(1.33,23.43,23.43,"Mars planet",'images/textures/marstexture.jpg');
-var marsGhost = buildShader('vertexShader', 'fragmentShader', 0.8, 11, 11);
+var marsGhost = createSphereShader('vertexShader', 'fragmentShader', 0.8, 11, 11);
 var marsOrbit = createOrbitLines(marsorbitradius*100);
 
 var earth = createTexturedSphere(2.5,44,44,"Earth planet",'images/textures/earthtexture.jpg');
-var earthGhost = buildShader('vertexShader', 'fragmentShader', 2, 22, 22);
+var earthGhost = createSphereShader('vertexShader', 'fragmentShader', 2, 22, 22);
 var earthOrbit = createOrbitLines(earthorbitradius*100);
 var moon = createTexturedSphere(0.675,11.88,11.88,"Moon planet",'images/textures/moontexture.jpg');
 var moonOrbit = createOrbitLines(5);
 
 var venus = createTexturedSphere(2.5,44,44,"Venus planet",'images/textures/venustexture.jpg');
-var venusGhost = buildShader('vertexShader', 'fragmentShader', 2, 22, 22);
+var venusGhost = createSphereShader('vertexShader', 'fragmentShader', 2, 22, 22);
 var venusOrbit = createOrbitLines(venusorbitradius*100);
 
 var mercury = createTexturedSphere(1,32,32,"Mercury planet",'images/textures/mercurytexture.jpg');
-var mercuryGhost = buildShader('vertexShader', 'fragmentShader', 0.5, 16, 16);
+var mercuryGhost = createSphereShader('vertexShader', 'fragmentShader', 0.5, 16, 16);
 var mercuryOrbit = createOrbitLines(mercuryorbitradius*100);
 
 var sun = createTexturedSphere(30,55,55,"Sun planet",'images/textures/suntexture.jpg');
@@ -271,6 +305,31 @@ function createsaturnring() {
         ring[b].applyMatrix4(combined);
         rings.add(ring[b]);
     }
+}
+
+function createSaturnRingGhost() { /*
+    for(let b=0; b < r; b++) {
+        var rot2 = new THREE.Matrix4();
+        var sca = new THREE.Matrix4();
+        var rot = new THREE.Matrix4();
+        var tra = new THREE.Matrix4();
+        var combined = new THREE.Matrix4();
+
+        sca.makeScale(2, 0.1, 4);
+        //rot2.makeRotationX(b * (Math.PI/r));
+        tra.makeTranslation(30, 0, 0);
+        rot.makeRotationY(b * (2*Math.PI/r));
+
+        combined.multiply(rot);
+        combined.multiply(tra);
+        combined.multiply(rot2);
+        combined.multiply(sca);
+        
+        //ring[b] = createCube(2, 1, 1.25, 0xD8AE6D);
+        ring[b] = createTexturedCube(2, 1, 1.25, 'images/textures/saturnringtexture.png');
+        ring[b].applyMatrix4(combined);
+        rings.add(ring[b]);
+    } */
 }
 
 // Create sunlight within the sun (does not illuminate sun), create camera light and ambient light
