@@ -6,13 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/godmode.css">
     <script src="js/three.js"></script>
-    <script src ="js/OrbitControls.js"></script>
+    <script src="js/FirstPersonControls.js" charset="utf-8"></script>
+    <script src="js/OrbitControls.js"></script>
+    <script src="js/OBJLoader.js"></script>
+    <script src="js/MTLLoader.js"></script>
+    <script src = "js/dat.gui.min.js"></script>
     <title>Explorer Mode</title>
 </head>
 <body>
-    <script src = "js/index/setup.js"></script>
-    <script src = "js/index/build.js"></script>
-    <script src = "js/index/animate.js"></script>
-    <script src = "js/index/run.js"></script>
+    <div class="banner">
+        <ul class ="navBar">
+            <a href="index.html">Home</a>
+            <h1>Explorer Mode</h1>
+            <p align ="center">Left Click - Forward, Right Click - Backward</p>
+        </ul>
+    </div>
+    <script src = "js/explorer_mode/setup.js"></script>
+    <script src = "js/explorer_mode/build.js"></script>
+    <script src = "js/explorer_mode/animate.js"></script>
+    <script src = "js/explorer_mode/run.js"></script>
 </body>
 </html>
