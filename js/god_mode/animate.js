@@ -346,7 +346,6 @@ function animate_saturnring() {
 //     requestAnimationFrame(animate_pluto);
 // }
 
-
 function animate_object(object, objectModel) {
 
     var barycenter = objectModel.barycenter().position;
@@ -355,16 +354,12 @@ function animate_object(object, objectModel) {
     object.position.x = (((scale*objectModel.orbitRadius)*Math.cos(alpha/objectModel.orbitSpeed)) + barycenter.x) ;
     object.position.z = (((-scale*objectModel.orbitRadius)*Math.sin(alpha/objectModel.orbitSpeed)) + barycenter.z) ;
     object.position.y = (((scale*objectModel.orbitTilt)*Math.sin(alpha/objectModel.orbitSpeed)*100) ) + 1 ;
-    if (object.name.includes("Venus planet")) {
-        console.log("x");
-    }
-
 }
+
 function animate_orbit(orbit, orbitModel) {
     orbit.position.z = orbitModel.position.z;
     orbit.position.x = orbitModel.position.x ;
 }
-
 
 function animate_system(){
     for (var i = 0; i < planetsList.length; i++){
@@ -543,6 +538,8 @@ var newPlanetOrbitRadius = 50;
 var newPlanetOrbitTilt = 0;
 var newPlanetOrbitSpeed = 20;
 var newPlanetRotationSpeed = 1;
+var newPlanet;
+var newPlanetOrbit;
 
 function buildGui() {
     gui = new dat.GUI();
@@ -565,23 +562,38 @@ function buildGui() {
 
         Add_Planet: function() { 
             var newPlanetModel = {
-                radius:newPlanetRadius,
+                radius: newPlanetRadius,
                 hLine:32,
                 vLine:32,
                 objectName:"New planet" + newPlanetCount,
-                texture: newPlanetTexture,
-                orbitRadius: newPlanetOrbitRadius,
+                texture:newPlanetTexture,
+                orbitRadius:newPlanetOrbitRadius,
                 barycenter: function() {return sun},
                 orbitTilt : newPlanetOrbitTilt,
-                orbitSpeed: newPlanetOrbitSpeed,
+                orbitSpeed: newPlanetOrbitRadius / (100*newPlanetRotationSpeed),//newPlanetOrbitSpeed,
                 rotaionSpeed: newPlanetRotationSpeed
             };
             planetModelsList.push(newPlanetModel);
-            var newPlanet = generateTexturedPlanet(newPlanetModel); 
-            var newPlanetOrbit = gererateOrbitLines(newPlanetModel);
+            newPlanet = generateTexturedPlanet(newPlanetModel);
+            newPlanetOrbit = gererateOrbitLines(newPlanetModel);
             newPlanetCount++;
-            console.log(planetsList.length);
+            //console.log(newPlanet.name);
         },
+
+        Remove_Planet: function() {
+            //scene.remove(newPlanet);
+            //scene.remove(newPlanetOrbit);
+            if (planetsList.length > 11) {
+                planetModelsList.pop();
+                planetsList.pop();
+                orbitsBarycenterList.pop();
+            }
+            astralObjects.remove(newPlanet);
+            orbits.remove(newPlanetOrbit);
+            newPlanetCount--;
+            //console.log(planetModelsList.length);
+        },
+
         Add_Planet_Radius: newPlanetRadius,
         Add_Planet_Orbit: newPlanetOrbitRadius,
         Add_Planet_Tilt: newPlanetOrbitTilt,
@@ -635,11 +647,12 @@ function buildGui() {
         createplanetfolder.add(params, 'Add_Planet_Rot_Speed', 0, 2).name("Rotation Speed").onChange(function(val){
             newPlanetRotationSpeed = val;
         });
-        createplanetfolder.add(params, 'Add_Planet_Texture', {Sun: 'images/textures/suntexture.jpg', Mercury: 'images/textures/mercurytexture.jpg', Venus: 'images/textures/venustexture.jpg', Earth: 'images/textures/earthtexture.jpg', Moon: 'images/textures/moontexture.jpg', Mars: 'images/textures/marstexture.jpg', Jupiter: 'images/textures/jupitertexture.jpg', Saturn: 'images/textures/saturntexture.jpg', Uranus: 'images/textures/uranustexture.jpg', Neptune: 'images/textures/neptunetexture.jpg', Pluto: 'images/textures/plutotexture.jpg'}).name("Texture").onChange(function(val){
+        createplanetfolder.add(params, 'Add_Planet_Texture', {Sun: 'images/textures/suntexture.jpg', Mercury: 'images/textures/mercurytexture.jpg', Venus: 'images/textures/venustexture.jpg', Earth: 'images/textures/earthtexture.jpg', Moon: 'images/textures/moontexture.jpg', Mars: 'images/textures/marstexture.jpg', Jupiter: 'images/textures/jupitertexture.jpg', Saturn: 'images/textures/saturntexture.jpg', Uranus: 'images/textures/uranustexture.jpg', Neptune: 'images/textures/neptunetexture.jpg', Pluto: 'images/textures/plutotexture.jpg', Asteroid: 'images/textures/asteroidtexture.jpg'}).name("Texture").onChange(function(val){
             newPlanetTexture = val;
         });
 
         createplanetfolder.add(params, 'Add_Planet').name("Add Planet");
+        createplanetfolder.add(params, 'Remove_Planet').name("Remove Last Planet");
 
         // planet selection folder
         planetfolder.add(params, 'Sun').name("The Sun");

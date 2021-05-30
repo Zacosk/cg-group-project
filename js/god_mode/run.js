@@ -40,7 +40,6 @@ updateTime();
 
 createLight();
 buildGui();
-
 // Recenter camera
 document.addEventListener('mousedown', onDocumentMouseDown, false);
 document.addEventListener('keydown', onDocumentKeyDown, false);

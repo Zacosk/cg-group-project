@@ -599,7 +599,6 @@ var mercury = generateTexturedPlanet(mercuryModel);
 var mercuryGhost = buildShader('vertexShader', 'fragmentShader', 0.5, 16, 16);
 var mercuryOrbit = gererateOrbitLines(mercuryModel);
 
-
 var skybox = createSkyBox(100000, 55, 55, 'images/textures/milkywaytexture.jpeg');
 
 //asteroids
