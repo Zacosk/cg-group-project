@@ -602,7 +602,6 @@ var mercuryOrbit = gererateOrbitLines(mercuryModel);
 
 var skybox = createSkyBox(100000, 55, 55, 'images/textures/milkywaytexture.jpeg');
 
-
 //asteroids
 var n = 600;
 var cubes = [];
@@ -727,9 +726,9 @@ function addSpotlight(object, xpos, ypos, zpos) {
 }
 
 function addShapes() {
-
     scene.add(astralObjects); 
     scene.add(skybox);
     scene.add(spotlightgroup);
     scene.add(orbits);
+    scene.add(rings);
 }
