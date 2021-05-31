@@ -6,7 +6,7 @@ var cameralight;
 var sunlight;
 var orbits = new THREE.Group();
 var astralObjects = new THREE.Group();
-var orbitsBarycenterList = [], planetsList = [], planetModelsList = [], moonList = [], moonModelsList = [];
+var orbitsBarycenterList = [], planetsList = [], planetModelsList = [], moonList = [], moonModelsList = [], ghostPlanetList = [], ghostPlanetModelsList = [];
 
 var mercuryorbitradius = 0.38;
 var venusorbitradius = 0.72;
@@ -21,9 +21,9 @@ var plutoorbitradius = 39.48;
 
 
 //Add 'ghost' planets with shader
-function buildShader(vertex, fragment, radius, hlines, vlines) {
+function buildShader(object) {
     //Define the Shader geometry
-    var geometry = new THREE.SphereBufferGeometry(radius, hlines, vlines);
+    var geometry = new THREE.SphereBufferGeometry(object.radius, object.hlines, object.vlines);
     // Define the number of vertices in the Shader geometry
     var numVertices = geometry.attributes.position.count;
     // Create a vertex array
@@ -52,6 +52,7 @@ function buildShader(vertex, fragment, radius, hlines, vlines) {
     // Create a cloud of point using the geometry and Shader material
     var ghostSphere = new THREE.Points(geometry, shaderMaterial);
 
+    ghostPlanetList.push(ghostSphere);
     return ghostSphere;
 }
 
@@ -224,7 +225,22 @@ var plutoModel = {
 planetModelsList.push(plutoModel);
 var pluto = generateTexturedPlanet(plutoModel);
 
-var plutoGhost = buildShader('vertexShader', 'fragmentShader', 0.2, 12, 12);
+var vertex = 'vertexShader'
+var fragment = 'fragmentShader'
+
+var plutoGhostModel = {
+    radius: 0.2,
+    hlines: 12,
+    vlines: 12,
+    orbitRadius:3948,
+    barycenter: function() {return sun},
+    orbitTilt : 12.076,
+    orbitSpeed: 247.9,
+    rotaionSpeed: 0.673
+}
+ghostPlanetModelsList.push(plutoGhostModel);
+var plutoGhost = buildShader(plutoGhostModel);
+
 var plutoOrbit = gererateOrbitLines(plutoModel);
 
 var neptuneModel = {
@@ -241,8 +257,22 @@ var neptuneModel = {
 };
 planetModelsList.push(neptuneModel);
 var neptune = generateTexturedPlanet(neptuneModel);
-var neptuneGhost = buildShader('vertexShader', 'fragmentShader', 8.8, 44, 44);
+
+var neptuneGhostModel = {
+    radius: 8.8,
+    hlines: 44,
+    vlines: 44,
+    orbitRadius:3005,
+    barycenter: function() {return sun},
+    orbitTilt : 0,
+    orbitSpeed: 163.7,
+    rotaionSpeed: 0.673
+}
+ghostPlanetModelsList.push(neptuneGhostModel);
+var neptuneGhost = buildShader(neptuneGhostModel);
+
 var neptuneOrbit = gererateOrbitLines(neptuneModel);
+
 var tritonModel = {
     radius:0.526,
     hLine:9.2,
@@ -272,7 +302,20 @@ var uranusModel = {
 };
 planetModelsList.push(uranusModel);
 var uranus = generateTexturedPlanet(uranusModel);
-var uranusGhost = buildShader('vertexShader', 'fragmentShader', 9, 44, 44);
+
+var uranusGhostModel = {
+    radius: 9,
+    hlines: 44,
+    vlines: 44,
+    orbitRadius:1920,
+    barycenter: function() {return sun},
+    orbitTilt : 0,
+    orbitSpeed: 83.7,
+    rotaionSpeed: 0.718
+}
+ghostPlanetModelsList.push(uranusGhostModel);
+var uranusGhost = buildShader(uranusGhostModel);
+
 var uranusOrbit = gererateOrbitLines(uranusModel);
 var arielModel = {
     radius:0.244,
@@ -346,7 +389,20 @@ var saturnModel = {
 };
 planetModelsList.push(saturnModel);
 var saturn = generateTexturedPlanet(saturnModel);
-var saturnGhost = buildShader('vertexShader', 'fragmentShader', 21, 44, 44);
+
+var saturnGhostModel = {
+    radius: 21,
+    hlines: 44,
+    vlines: 44,
+    orbitRadius:950,
+    barycenter: function() {return sun},
+    orbitTilt : 0,
+    orbitSpeed: 29.456,
+    rotaionSpeed: 0.425
+}
+ghostPlanetModelsList.push(saturnGhostModel);
+var saturnGhost = buildShader(saturnGhostModel);
+
 var saturnOrbit = gererateOrbitLines(saturnModel);
 var dioneModel = {
     radius:0.216,
@@ -422,7 +478,20 @@ var jupiterModel = {
 };
 planetModelsList.push(jupiterModel);
 var jupiter = generateTexturedPlanet(jupiterModel);
-var jupiterGhost = buildShader('vertexShader', 'fragmentShader', 26, 44, 44);
+
+var jupiterGhostModel = {
+    radius: 26,
+    hlines: 44,
+    vlines: 44,
+    orbitRadius:520.3,
+    barycenter: function() {return sun},
+    orbitTilt : 0,
+    orbitSpeed: 11.862,
+    rotaionSpeed: 0.41
+}
+ghostPlanetModelsList.push(jupiterGhostModel);
+var jupiterGhost = buildShader(jupiterGhostModel);
+
 var jupiterOrbit = gererateOrbitLines(jupiterModel);
 
 var callistoModel = {
@@ -499,7 +568,20 @@ var marsModel = {
 };
 planetModelsList.push(marsModel);
 var mars = generateTexturedPlanet(marsModel);
-var marsGhost = buildShader('vertexShader', 'fragmentShader', 0.8, 11, 11);
+
+var marsGhostModel = {
+    radius: 0.8,
+    hlines: 11,
+    vlines: 11,
+    orbitRadius:152.4,
+    barycenter: function() {return sun},
+    orbitTilt : 0,
+    orbitSpeed: 1.9,
+    rotaionSpeed: 1.03
+}
+ghostPlanetModelsList.push(marsGhostModel);
+var marsGhost = buildShader(marsGhostModel);
+
 var marsOrbit = gererateOrbitLines(marsModel);
 
 var deimosModel = {
@@ -546,7 +628,20 @@ var earthModel = {
 };
 planetModelsList.push(earthModel);
 var earth = generateTexturedPlanet(earthModel);
-var earthGhost = buildShader('vertexShader', 'fragmentShader', 2, 22, 22);
+
+var earthGhostModel = {
+    radius: 2,
+    hlines: 22,
+    vlines: 22,
+    orbitRadius:100,
+    barycenter: function() {return sun},
+    orbitTilt : 0,
+    orbitSpeed: 1,
+    rotaionSpeed: 1
+}
+ghostPlanetModelsList.push(earthGhostModel);
+var earthGhost = buildShader(earthGhostModel);
+
 var earthOrbit = gererateOrbitLines(earthModel);
 var moonModel = {
     radius:0.675,
@@ -579,7 +674,20 @@ var venusModel = {
 };
 planetModelsList.push(venusModel);
 var venus = generateTexturedPlanet(venusModel);
-var venusGhost = buildShader('vertexShader', 'fragmentShader', 2, 22, 22);
+
+var venusGhostModel = {
+    radius: 2,
+    hlines: 22,
+    vlines: 22,
+    orbitRadius:72,
+    barycenter: function() {return sun},
+    orbitTilt : 0,
+    orbitSpeed: 0.616,
+    rotaionSpeed: 0.00411522
+}
+ghostPlanetModelsList.push(venusGhostModel);
+var venusGhost = buildShader(venusGhostModel);
+
 var venusOrbit = gererateOrbitLines(venusModel);
 
 var mercuryModel = {
@@ -596,7 +704,20 @@ var mercuryModel = {
 };
 planetModelsList.push(mercuryModel);
 var mercury = generateTexturedPlanet(mercuryModel);
-var mercuryGhost = buildShader('vertexShader', 'fragmentShader', 0.5, 16, 16);
+
+var mercuryGhostModel = {
+    radius: 0.5,
+    hlines: 16,
+    vlines: 16,
+    orbitRadius:38,
+    barycenter: function() {return sun},
+    orbitTilt : 0,
+    orbitSpeed: 0.24,
+    rotaionSpeed: 0.01706
+}
+ghostPlanetModelsList.push(mercuryGhostModel);
+var mercuryGhost = buildShader(mercuryGhostModel);
+
 var mercuryOrbit = gererateOrbitLines(mercuryModel);
 
 var skybox = createSkyBox(100000, 55, 55, 'images/textures/milkywaytexture.jpeg');
@@ -730,4 +851,5 @@ function addShapes() {
     scene.add(spotlightgroup);
     scene.add(orbits);
     scene.add(rings);
+    scene.add(asteroids);
 }

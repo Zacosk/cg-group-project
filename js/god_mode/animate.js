@@ -371,6 +371,10 @@ function animate_system(){
     for (var i = 0; i < orbitsBarycenterList.length; i++){
         animate_orbit(orbits.children[i], orbitsBarycenterList[i]);
     }
+    
+    for (var i = 0; i < ghostPlanetList.length; i++) {
+        animate_object(ghostPlanetList[i], ghostPlanetModelsList[i]);
+    } 
     requestAnimationFrame(animate_system);
 }
 
@@ -461,10 +465,8 @@ function onDocumentKeyDown(event) {
         resetCamera();
     }
     if (keyCode == 90) {
-        //code to remove sun?
-    sun.geometry.dispose();
-    sun.material.dispose();
-    scene.remove(sun);
+    // test code
+    console.log(ghostPlanetList.length);
     }
     if (keyCode == 88) {
         scene.add(sun);
@@ -507,15 +509,15 @@ function resetOrbit() {
     if (planetselected) {
         //console.log("planetselected");
         switch (selectedplanetshortname) {
-        case "Mercury": mercuryorbitradius = 0.38; scene.remove(mercuryGhost); break;
-        case "Venus": venusorbitradius = 0.72; scene.remove(venusGhost); break;
-        case "Earth": earthorbitradius = 1; scene.remove(earthGhost); break;
-        case "Mars": marsorbitradius = 1.524; scene.remove(marsGhost); break;
-        case "Jupiter": jupiterorbitradius = 5.203; scene.remove(jupiterGhost); break;
-        case "Saturn": saturnorbitradius = 9.5; scene.remove(saturnGhost); break;
-        case "Uranus": uranusorbitradius = 19.2; scene.remove(uranusGhost); break;
-        case "Neptune": neptuneorbitradius = 30.05; scene.remove(neptuneGhost); break;
-        case "Pluto": plutoorbitradius = 39.48; scene.remove(plutoGhost); break;
+        case "Mercury": planetModelsList[10].orbitRadius = 38; scene.remove(mercuryGhost); break;
+        case "Venus": planetModelsList[9].orbitRadius = 72; scene.remove(venusGhost); break;
+        case "Earth": planetModelsList[7].orbitRadius = 100; scene.remove(earthGhost); break;
+        case "Mars": planetModelsList[6].orbitRadius = 152.4; scene.remove(marsGhost); break;
+        case "Jupiter": planetModelsList[5].orbitRadius = 520.3; scene.remove(jupiterGhost); break;
+        case "Saturn": planetModelsList[4].orbitRadius = 950; scene.remove(saturnGhost); break;
+        case "Uranus": planetModelsList[3].orbitRadius = 1920; scene.remove(uranusGhost); break;
+        case "Neptune": planetModelsList[2].orbitRadius = 3005; scene.remove(neptuneGhost); break;
+        case "Pluto": planetModelsList[1].orbitRadius = 3948; scene.remove(plutoGhost); break;
         }
     }
 }
@@ -688,20 +690,20 @@ function buildGui() {
             size = val;
             resizePlanet();
         });
-        selectedplanetfolder.add(params, 'Orbit_Radius', 0, 50).name("Orbit Radius").onChange(function(val){
+        selectedplanetfolder.add(params, 'Orbit_Radius', 0, 3950).name("Orbit Radius").onChange(function(val){
             //orbit = val;
             if (planetselected) {
-                //console.log("planetselected");
+                //console.log(selectedplanetshortname);
                 switch (selectedplanetshortname) {
-                case "Mercury": mercuryorbitradius = val; scene.add(mercuryGhost); break;
-                case "Venus": venusorbitradius = val; scene.add(venusGhost); break;
-                case "Earth": earthorbitradius = val; scene.add(earthGhost); break;
-                case "Mars": marsorbitradius = val; scene.add(marsGhost); break;
-                case "Jupiter": jupiterorbitradius = val; scene.add(jupiterGhost); break;
-                case "Saturn": saturnorbitradius = val; scene.add(saturnGhost); break;
-                case "Uranus": uranusorbitradius = val; scene.add(uranusGhost); break;
-                case "Neptune": neptuneorbitradius = val; scene.add(neptuneGhost); break;
-                case "Pluto": plutoorbitradius = val; scene.add(plutoGhost); break;
+                case "Mercury": planetModelsList[10].orbitRadius = val; scene.add(mercuryGhost); break;
+                case "Venus": planetModelsList[9].orbitRadius = val; scene.add(venusGhost); break;
+                case "Earth": planetModelsList[7].orbitRadius = val; scene.add(earthGhost); break;
+                case "Mars": planetModelsList[6].orbitRadius = val; scene.add(marsGhost); break;
+                case "Jupiter": planetModelsList[5].orbitRadius = val; scene.add(jupiterGhost); break;
+                case "Saturn": planetModelsList[4].orbitRadius = val; scene.add(saturnGhost); break;
+                case "Uranus": planetModelsList[3].orbitRadius = val; scene.add(uranusGhost); break;
+                case "Neptune": planetModelsList[2].orbitRadius = val; scene.add(neptuneGhost); break;
+                case "Pluto": planetModelsList[1].orbitRadius = val; scene.add(plutoGhost); break;
                 }
             }
         });
