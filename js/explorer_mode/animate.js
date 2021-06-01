@@ -261,10 +261,20 @@ function animate_pluto() {
     requestAnimationFrame(animate_pluto);
 }
 
+// go back a page if the shift button is pressed
+function onDocumentKeyDown(event) {
+    var keyCode = event.which;
+    // shift key
+    if (keyCode == 16) {
+        console.log("detected");
+        window.location.href = "index.html";
+    }
+}
+
 // Build the GUI
-var spd = 0.01
+var spd = 4.01;
 var time = 1;
-var lookspeed = 0.01;
+var lookspeed = 0.015;
 
 function buildGui() {
     gui = new dat.GUI();
@@ -281,10 +291,10 @@ function buildGui() {
     gui.add(params, 'look_speed', 0.01, 0.5).onChange(function(val){
         lookspeed = val;
     });
-
+    /*
     gui.add(params, 'Time', 1, 50).onChange(function(val){
         time = val;
-    });
+    }); */
 }
 
 var clock = new THREE.Clock();
@@ -308,9 +318,9 @@ function updatePositionForCamera(camera) {
 function animate_shuttle(){
     //Start the camera at earth's position
     if(!started){
-        camera.position.x = earth.position.x;
-        camera.position.y = earth.position.y;
-        camera.position.z = earth.position.z;
+        camera.position.x = earth.position.x+50;
+        camera.position.y = earth.position.y+5;
+        camera.position.z = earth.position.z+100;
         started = true;
     }
     //Force camera to follow the shuttle

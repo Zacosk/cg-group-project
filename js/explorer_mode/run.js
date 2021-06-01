@@ -36,4 +36,6 @@ renderScene();
 createLight();
 buildGui();
 
+document.addEventListener('keydown', onDocumentKeyDown, false);
+
 window.addEventListener('resize', resizeScene);

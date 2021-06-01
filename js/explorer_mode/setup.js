@@ -12,7 +12,7 @@ var height = window.innerHeight;
 function setScene() {
     scene = new THREE.Scene();
     var ratio = window.innerWidth / window.innerHeight;
-    camera = new THREE.PerspectiveCamera(10, ratio, 0.1, 1000000);
+    camera = new THREE.PerspectiveCamera(20, ratio, 0.1, 1000000);
     camera.position.set(0, 0, 0);
     camera.lookAt(0, 0, 0);
     renderer = new THREE.WebGLRenderer();
