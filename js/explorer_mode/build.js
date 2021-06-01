@@ -45,6 +45,8 @@ function createShuttle(){
     //material.wireframe = true;
     var geometry_cube = new THREE.BoxGeometry(10, 10, 20);
     var cube = new THREE.Mesh(geometry_cube, material);
+    cube.material.side = THREE.DoubleSide;
+    cube.position.set(0, 0 -10);
     return cube;
 }
 
@@ -196,8 +198,7 @@ var r = 40;
 var ring = [];
 var rings = new THREE.Group();
 
-function createAsteroids(){
-    
+function createAsteroids() {
     for(let i=0; i < n; i++) {
         var rot2 = new THREE.Matrix4();
         var sca = new THREE.Matrix4();
@@ -213,9 +214,19 @@ function createAsteroids(){
         combined.multiply(rot);
         combined.multiply(tra);
         combined.multiply(rot2);
-        combined.multiply(sca);
+        //combined.multiply(sca);
         
-        cubes[i] = createSphere(1, 3, 3, 0x594433)
+        var rdmsize = (Math.random()*2)+0.5;
+        var rdmcolnum = Math.round(Math.random() * 3);
+        var colour = new THREE.Color(0xffffff);
+
+        switch(rdmcolnum) {
+            case 0: colour.setHex(0x594433); break;
+            case 1: colour.setHex(0x382c23); break;
+            case 2: colour.setHex(0x402e1f); break;
+            case 3: colour.setHex(0x4d3929); break;
+        }
+        cubes[i] = createSphere(rdmsize, 5, 6, colour)
         cubes[i].applyMatrix4(combined);
         asteroids.add(cubes[i]);
     }
