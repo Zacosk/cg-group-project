@@ -37,5 +37,6 @@ createLight();
 buildGui();
 
 document.addEventListener('keydown', onDocumentKeyDown, false);
+document.addEventListener('wheel', changeMoveSpeed, false);
 
 window.addEventListener('resize', resizeScene);

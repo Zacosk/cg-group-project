@@ -312,6 +312,10 @@ function updatePositionForCamera(camera) {
     
     shuttle.position.set(cwd.x, cwd.y, cwd.z);
     shuttle.setRotationFromQuaternion(camera.quaternion);
+
+    console.log("shuttle: ");
+    console.log(shuttle.position.z);
+    console.log("cwd: " + cwd.z);
 }
 
 //Code to animate shuttle and take user input for shuttle
@@ -324,11 +328,23 @@ function animate_shuttle(){
         started = true;
     }
     //Force camera to follow the shuttle
+    updatePositionForCamera(camera);
     
     //Render the camera
     var delta = clock.getDelta();
     controls.update(delta);
     controls.lookSpeed = lookspeed;
     controls.movementSpeed = spd;
+
+    var output = "Move Speed: " + spd + ", Look Speed: " + lookspeed;
+
+    function changeMoveSpeed(event){
+        spd = event.deltaY;
+    }
+
+    window.onload = function(){
+        document.getElementById("output").innerHTML = output;
+    }
+
     requestAnimationFrame(animate_shuttle);
 }

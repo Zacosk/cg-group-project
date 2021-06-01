@@ -45,6 +45,8 @@ function createShuttle(){
     //material.wireframe = true;
     var geometry_cube = new THREE.BoxGeometry(10, 10, 20);
     var cube = new THREE.Mesh(geometry_cube, material);
+    cube.material.side = THREE.DoubleSide;
+    cube.position.set(0, 0 -10);
     return cube;
 }
 
