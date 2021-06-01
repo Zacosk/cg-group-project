@@ -658,6 +658,20 @@ var moonModel = {
 planetModelsList.push(moonModel);
 moonModelsList.push(moonModel);
 var moon = generateTexturedPlanet(moonModel);
+
+var moonGhostModel = {
+    radius: 0.5,
+    hlines: 11,
+    vlines: 11,
+    orbitRadius:5,
+    barycenter: function() {return earth},
+    orbitTilt : 0,
+    orbitSpeed: 20,
+    rotaionSpeed: 1
+}
+ghostPlanetModelsList.push(moonGhostModel);
+var moonGhost = buildShader(moonGhostModel);
+
 var moonOrbit = gererateOrbitLines(moonModel);
 
 var venusModel = {
@@ -841,8 +855,8 @@ function addSpotlight(object, xpos, ypos, zpos) {
     spotlight.distance = 100;
     spotlightgroup.add(spotlight);
     //helpers used to show the wireframe of the spotlight's light cone:
-    // var helper = new THREE.SpotLightHelper(spotlight);
-    // spotlightgroup.add(helper);
+    //var helper = new THREE.SpotLightHelper(spotlight);
+    //spotlightgroup.add(helper);
 }
 
 function addShapes() {
