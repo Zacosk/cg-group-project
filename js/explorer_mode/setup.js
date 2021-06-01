@@ -1,4 +1,6 @@
-//Declare System Variables
+  
+/* global THREE */
+//Declare Systen Variables
 
 var scene;
 var camera;
@@ -21,7 +23,6 @@ function setScene() {
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     document.body.appendChild(renderer.domElement);
     controls = new THREE.FirstPersonControls(camera, renderer.domElement);
-
 }
 
 //Resize the scene and update the camera aspect to the screen ration

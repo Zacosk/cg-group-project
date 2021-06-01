@@ -18,9 +18,10 @@ createsaturnring();
 //  animate_europa();
 //  animate_ganymede();
 //  animate_callisto();
-//  animate_Asteroids();
+
 // // animate_saturn();
-  animate_saturnring();
+animate_saturnring();
+animate_Asteroids();
 //  animate_titan();
 //  animate_rhea();
 //  animate_iapetus();

@@ -189,19 +189,19 @@ function animate_sun(){
 //     requestAnimationFrame(animate_callisto);
 // }
 
-// function rotate(object) {
-//     object.rotation.x += (Math.random()/50)*time;
-//     object.rotation.z += (Math.random()/50)*time;
-//     object.rotation.y += (Math.random()/50)*time;
-// }
+function rotate(object) {
+    object.rotation.x += (Math.random()/50)*time;
+    object.rotation.z += (Math.random()/50)*time;
+    object.rotation.y += (Math.random()/50)*time;
+}
 
-// function animate_Asteroids() {
-//     //Rotate all cubes
-//     cubes.forEach(rotate);
-//     //Rotate the group around the Y axis
-//     asteroids.rotation.y += 0.0008*(time/2);
-//     requestAnimationFrame(animate_Asteroids);
-// }
+function animate_Asteroids() {
+    //Rotate all cubes
+    cubes.forEach(rotate);
+    //Rotate the group around the Y axis
+    asteroids.rotation.y += 0.0008*(time/2);
+    requestAnimationFrame(animate_Asteroids);
+}
 
 // function animate_saturn() {
 //     saturn.rotation.y += (speed*0.425)*time;
@@ -466,10 +466,6 @@ function onDocumentKeyDown(event) {
     }
     if (keyCode == 90) {
     // test code
-    console.log(ghostPlanetList.length);
-    }
-    if (keyCode == 88) {
-        scene.add(sun);
     }
 }
 
@@ -567,7 +563,7 @@ function buildGui() {
                 radius: newPlanetRadius,
                 hLine:32,
                 vLine:32,
-                objectName:"New planet" + newPlanetCount,
+                objectName:"New planet " + newPlanetCount,
                 texture:newPlanetTexture,
                 orbitRadius:newPlanetOrbitRadius,
                 barycenter: function() {return sun},
@@ -579,21 +575,27 @@ function buildGui() {
             newPlanet = generateTexturedPlanet(newPlanetModel);
             newPlanetOrbit = gererateOrbitLines(newPlanetModel);
             newPlanetCount++;
-            //console.log(newPlanet.name);
         },
 
         Remove_Planet: function() {
-            //scene.remove(newPlanet);
-            //scene.remove(newPlanetOrbit);
+            for (var i = 0; i < astralObjects.children.length; i++){
+                var latestPlanetNumber = newPlanetCount -1;
+                latestPlanetNumber.toString();
+                if (astralObjects.children[i].name.includes(latestPlanetNumber)) {
+                    scene.remove(astralObjects.children[i]);
+                    scene.remove(orbits.children[i-1]);
+                    astralObjects.remove(astralObjects.children[i]);
+                    orbits.remove(orbits.children[i-1]);
+                }
+            }
+
             if (planetsList.length > 11) {
                 planetModelsList.pop();
                 planetsList.pop();
                 orbitsBarycenterList.pop();
             }
-            astralObjects.remove(newPlanet);
-            orbits.remove(newPlanetOrbit);
+            
             newPlanetCount--;
-            //console.log(planetModelsList.length);
         },
 
         Add_Planet_Radius: newPlanetRadius,
